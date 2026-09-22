@@ -1,7 +1,12 @@
-import cv2
-from ultralytics import YOLO
+try:
+    import cv2  
+    import ultralytics  
+except ImportError as exc:
+    raise SystemExit(
+        "Missing required packages. Install them with: pip install opencv-python ultralytics"
+    ) from exc
 
-model = YOLO("yolo11n.pt")
+model = ultralytics.YOLO("yolo11n.pt")
 # model = YOLO("image_of_Headphones.pt")
 # model = YOLO("my_objects.pt")
 # results = model(frame)
@@ -38,7 +43,7 @@ while True:
     annotated_frame = results[0].plot()
     cv2.imshow("YOLO Camera", annotated_frame)
 
-    if cv2.waitKey(1) & 0xFF == ord("q"): 
+    if cv2.waitKey(1) & 0xFF == ord("Q"): 
         break
 
 camera.release()
